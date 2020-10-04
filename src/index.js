@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import CourseListComponent from "./components/CourseListComponent";
 import "bootstrap/dist/css/bootstrap.min.css"
+import CourseManagerComponent from './components/CourseManagerComponent';
 
 ReactDOM.render(
-  <CourseListComponent/>
+  <div className="container-fluid">
+    <CourseManagerComponent/>
+  </div>
   ,
   document.getElementById('root')
 );
