@@ -57,9 +57,9 @@ class CourseManagerComponent extends React.Component {
         <Router>
             {/* <Link to="/course/table">Table</Link> |
             <Link to="/course/grid">Grid</Link> */}
-            {/* <Route exact path='/'>
+            <Route exact path='/'>
               <Redirect to='/course/table'/>
-            </Route> */}
+            </Route>
             {console.log('render', this.state.courses)}
             <Route
               path="/course/table"
