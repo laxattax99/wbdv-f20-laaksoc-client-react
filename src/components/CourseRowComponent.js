@@ -1,5 +1,6 @@
 import React from "react";
 import {updateCourse} from "../services/CourseService";
+import {Link} from "react-router-dom";
 
 class CourseRowComponent extends React.Component {
   state = {
@@ -38,7 +39,7 @@ class CourseRowComponent extends React.Component {
           }
           {
             this.state.editing === false &&
-            <label>{this.state.course.title}</label>
+            <Link to={`/course/edit/${this.state.course._id}`}>{this.state.course.title}</Link>
           }
         </td>
         <td>{this.props.course.owner}</td>
@@ -49,7 +50,7 @@ class CourseRowComponent extends React.Component {
           </button>
           {
             this.state.editing &&
-            <button onClick={this.updateCourse}>
+            <button onClick={() => this.updateCourse()}>
               Ok
             </button>
           }

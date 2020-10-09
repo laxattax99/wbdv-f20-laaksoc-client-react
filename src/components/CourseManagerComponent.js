@@ -1,20 +1,24 @@
 import React from "react";
-import courseService from "../services/CourseService";
+// import courseService from "../services/CourseService";
+import {findAllCourses, createCourse, deleteCourse} from '../services/CourseService'
 import CourseTableComponent from "./CourseTableComponent";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import CourseGridComponent from "./CourseGridComponent";
+import CourseEditorComponent from "./CourseEditorComponent";
 
 class CourseManagerComponent extends React.Component {
   state = {
-    tableView: false,
     courses: [],
   };
 
   componentDidMount() {
-    courseService.findAllCourses().then((courses) =>
-      this.setState({
-        courses: courses,
-      })
+  this.getCourses();
+  console.log('mount')
+  }
+
+  getCourses =() => {
+    findAllCourses().then((courses) => 
+    this.setState({courses: courses})
     );
   }
 
@@ -25,19 +29,9 @@ class CourseManagerComponent extends React.Component {
       lastUpdated: "yesterday",
     };
 
-    // UNSAFE:
-    // const newState = {
-    //   courses: [
-    //     ...this.state.courses, newCourse
-    //   ]
-    // }
-    //
-    // this.setState(newState)
 
-    // SAFE:
-
-    courseService
-      .createCourse(newCourse)
+    
+      createCourse(newCourse)
       .then((actualCourse) =>
         this.setState(function (prevState) {
           return {
@@ -49,7 +43,7 @@ class CourseManagerComponent extends React.Component {
   };
 
   deleteCourse = (course) => {
-    courseService.deleteCourse(course._id).then((statu) =>
+    deleteCourse(course._id).then((statu) =>
       this.setState((prevState) => ({
         courses: prevState.courses.filter((c) => c._id !== course._id),
       }))
@@ -57,74 +51,40 @@ class CourseManagerComponent extends React.Component {
   };
 
   render() {
+    const { courses } = this.state
     return (
       <div className="container-fluid">
-        <nav className="navbar navbar-light bg-light fixed-top">
-          <span>
-            <button
-              className="navbar-toggler wbdv-field wbdv-hamburger"
-              type="button"
-              data-toggle="collapse"
-              data-target="#collapsingNavbar1"
-            >
-              ☰
-            </button>
-            <a className="navbar-brand wbdv-label wbdv-course-manager" href="#">
-              Course Manager
-            </a>
-          </span>
-          <form className="form-inline">
-            <input
-              className="form-control mr-sm-2 wbdv-field wbdv-new-course"
-              type="search"
-              placeholder="New Course Title"
-              aria-label="Search"
-            />
-            <button
-              onClick={this.createCourse}
-              className="btn btn-outline-success my-2 my-sm-0 wbdv-button wbdv-add-course"
-            >
-              Add Course
-            </button>
-          </form>
-          <div className="navbar-collapse collapse" id="collapsingNavbar1">
-            <ul className="nav navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <br/>
-        <br/>
         <Router>
-          <div>
-            <Link to="/course/table">Table</Link> |
-            <Link to="/course/grid">Grid</Link>
+            {/* <Link to="/course/table">Table</Link> |
+            <Link to="/course/grid">Grid</Link> */}
+            {/* <Route exact path='/'>
+              <Redirect to='/course/table'/>
+            </Route> */}
+            {console.log('render', this.state.courses)}
             <Route
               path="/course/table"
-              render={() => (
+              render={() => 
                 <CourseTableComponent 
                 courses={this.state.courses}
-                deleteCourse={this.deleteCourse} />
-              )}
+                deleteCourse={this.deleteCourse}
+                createCourse={this.createCourse} />
+              }
             />
             <Route
               path="/course/grid"
               render={() => (
                 <CourseGridComponent 
                 courses={this.state.courses}
-                deleteCourse={this.deleteCourse} />
+                deleteCourse={this.deleteCourse}
+                createCourse={this.createCourse} />
               )}
             />
-          </div>
+            <Route
+            path="/course/edit/:courseId"
+            render={() => (
+              <CourseEditorComponent />
+            )}
+            />
         </Router>
       </div>
     );

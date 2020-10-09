@@ -2,6 +2,9 @@ import React from "react";
 import LessonTabsComponent from "./LessonTabsComponent";
 import ModuleListComponent from "./ModuleListComponent";
 import TopicPillsComponent from "./TopicPillsComponent";
+import { FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import { faTimes} from "@fortawesome/free-solid-svg-icons"
+import { Link } from "react-router-dom";
 
 class CourseEditorComponent extends React.Component{
 
@@ -9,9 +12,9 @@ class CourseEditorComponent extends React.Component{
         return(
             <div className="container">
       <h1 className="wbdv-course-title">
-          <a href="../course-list/course-list.template.client.html" class="wbdv-course-editor wbdv-close">
-              <i class="fas fa-times"></i>
-          </a>
+          <Link to="/course/table/">
+              <FontAwesomeIcon icon={faTimes}/>
+          </Link>
         Course Title
       </h1>
       <div class="row">

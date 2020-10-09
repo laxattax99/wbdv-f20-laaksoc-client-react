@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { updateCourse } from "../services/CourseService";
+import CourseEditorComponent from "./CourseEditorComponent";
 
 class CourseCardComponent extends React.Component {
   state = {
@@ -44,18 +45,18 @@ class CourseCardComponent extends React.Component {
           }
           </h5>
           <p className="card-text">Card text.</p>
-          <Link className="btn btn-primary" to={`/course/edit/`}>
+          <Link className="btn btn-primary" to={`/course/edit/${this.state.course._id}`}>
             More...
           </Link>
           <button
             className="btn btn-danger"
-            onClick={this.props.deleteCourse(this.props.course)}
+            onClick={() => this.props.deleteCourse(this.props.course)}
           >
             Delete
           </button>
           {
             this.state.editing &&
-            <button onClick={this.updateCourse} className="btn btn-primary">
+            <button onClick={() => this.updateCourse()} className="btn btn-primary">
               Ok
             </button>
           }

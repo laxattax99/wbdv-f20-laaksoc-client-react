@@ -1,24 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import CourseCardComponent from "./CourseCardComponent"
+import CourseCardComponent from "./CourseCardComponent";
+import courseService from "../services/CourseService";
+import NavBarComponent from "./NavBarComponent";
 
-class CourseGridComponent extends React.Component {
-  state = {
-      courses: this.props.courses
-  };
+const CourseGridComponent = ({ courses, deleteCourse, createCourse }) => {
+  return (
+    <div>
+      <NavBarComponent createCourse={createCourse} />
+      <div className="card-deck">
+        {courses.map((course) => (
+          <CourseCardComponent
+            course={course}
+            key={course.id}
+            deleteCourse={deleteCourse}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-  render() {
-    return (
-        <div className="card-deck">
-        {  this.state.courses.map((course) =>
-             <CourseCardComponent 
-             course={course}
-             key={course.id}
-             deleteCourse={this.props.deleteCourse}/>)}
-        </div>
-        
-    );
-  }
-}
-
-export default CourseGridComponent
+export default CourseGridComponent;

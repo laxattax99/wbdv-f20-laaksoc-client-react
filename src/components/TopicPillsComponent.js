@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import { faPlus} from "@fortawesome/free-solid-svg-icons"
 
 class TopicPillsComponent extends React.Component{
 
@@ -25,7 +27,7 @@ class TopicPillsComponent extends React.Component{
             </li>
             <li class="nav-item wbdv-topic-pill">
               <button href="#" class="nav-link wbdv-topic-add-btn btn btn-success"> 
-                <i class="fas fa-plus"></i>
+                <FontAwesomeIcon icon={faPlus}/>
               </button>
             </li>
           </ul> 
