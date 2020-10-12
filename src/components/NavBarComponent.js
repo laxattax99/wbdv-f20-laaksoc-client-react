@@ -16,7 +16,7 @@ const NavBarComponent = ({ createCourse }) => {
           Course Manager
         </a>
       </span>
-      <span>
+      <span className="form-inline">
         <input
           className="form-control mr-sm-2 wbdv-field wbdv-new-course"
           type="search"
