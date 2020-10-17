@@ -81,9 +81,7 @@ class CourseManagerComponent extends React.Component {
             />
             <Route
             path="/course/edit/:courseId"
-            render={() => (
-              <CourseEditorComponent />
-            )}
+            exact component={CourseEditorComponent}
             />
         </Router>
       </div>
