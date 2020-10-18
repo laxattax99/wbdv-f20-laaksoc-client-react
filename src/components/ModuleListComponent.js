@@ -19,48 +19,46 @@ const ModuleListComponent = ({
   createModule,
   updateModule,
 }) => {
-  console.log(modules)
   return (
     <div>
-      
-    <ul className="list-group wbdv-module-list">
-      {modules.map((module) => (
-        <li key={module._id}>
-          <button onClick={() => deleteModule(module)}>Delete</button>
-          {module.editing && (
-            <span>
-              <button
-                onClick={() => updateModule({ ...module, editing: false })}
+      <ul className="list-group wbdv-module-list">
+        {modules.map((module) => (
+          <li key={module._id}>
+            <button onClick={() => deleteModule(module)}>Delete</button>
+            {module.editing && (
+              <span>
+                <button
+                  onClick={() => updateModule({ ...module, editing: false })}
                 >
-                Ok
-              </button>
-              <input
-                onChange={(event) =>
-                  updateModule({ ...module, title: event.target.value })
-                }
-                value={module.title}
+                  Ok
+                </button>
+                <input
+                  onChange={(event) =>
+                    updateModule({ ...module, title: event.target.value })
+                  }
+                  value={module.title}
                 />
-            </span>
-          )}
-          {!module.editing && (
-            <span>
-              <button
-                onClick={() => updateModule({ ...module, editing: true })}
+              </span>
+            )}
+            {!module.editing && (
+              <span>
+                <button
+                  onClick={() => updateModule({ ...module, editing: true })}
                 >
-                Edit
-              </button>
-              <Link to={`/edit/${course._id}/modules/${module._id}`}>
-                {module.title}
-              </Link>
-            </span>
-          )}
-        </li>
-      ))}
-    </ul>
-    <button onClick={() => createModule(course, {title: "New Module"})}>
-      Create Module
-    </button>
-      </div>
+                  Edit
+                </button>
+                <Link to={`/course/edit/${course._id}/modules/${module._id}`}>
+                  {module.title}
+                </Link>
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+      <button onClick={() => createModule(course, { title: "New Module" })}>
+        Create Module
+      </button>
+    </div>
   );
 };
 

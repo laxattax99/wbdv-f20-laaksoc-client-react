@@ -20,8 +20,8 @@ export const updateTopic = (dispatch, topic) =>
     })
   );
 
-export const createTopic = (dispatch, lesson, topic) =>
-  topicService.createTopic(lesson._id, topic).then((actualTopic) =>
+export const createTopic = (dispatch, lessonId, topic) =>
+  topicService.createTopic(lessonId, topic).then((actualTopic) =>
     dispatch({
       type: CREATE_TOPIC,
       topic: actualTopic,
@@ -33,6 +33,7 @@ export const findTopics = (dispatch, lessonId) => {
     dispatch({
       type: FIND_TOPICS_FOR_LESSONS,
       topics: actualTopics,
+      lessonId: lessonId
     })
   );
 };

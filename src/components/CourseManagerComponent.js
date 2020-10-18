@@ -80,7 +80,8 @@ class CourseManagerComponent extends React.Component {
             />
             <Route
             path={["/course/edit/:courseId",
-          "course/edit/:courseId/modules/:moduleId"]}
+          "/course/edit/:courseId/modules/:moduleId",
+        "/course/edit/:courseId/modules/:moduleId/lessons/:lessonId"]}
             exact component={CourseEditorComponent}
             />
         </Router>

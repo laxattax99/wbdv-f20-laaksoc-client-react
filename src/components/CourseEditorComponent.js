@@ -10,6 +10,7 @@ import lessonService from "../services/LessonService";
 import moduleService from "../services/ModuleService";
 import { findModules, createModule, updateModule } from "../actions/moduleActions.js";
 import {findLessons} from "../actions/lessonActions.js";
+import {findTopics} from "../actions/topicActions.js";
 import {connect} from "react-redux";
 
 class CourseEditorComponent extends React.Component {
@@ -27,10 +28,14 @@ class CourseEditorComponent extends React.Component {
   componentDidMount() {
     const courseId = this.props.match.params.courseId
     const moduleId = this.props.match.params.moduleId
+    const lessonId = this.props.match.params.lessonId
     this.props.findCourseById(courseId)
     this.props.findModulesForCourse(courseId)
     if(moduleId) {
       this.props.findLessonsForModule(moduleId)
+    }
+    if(lessonId) {
+      this.props.findTopicsForLesson(lessonId)
     }
   }
 
@@ -39,6 +44,11 @@ class CourseEditorComponent extends React.Component {
     const previousModuleId = prevProps.match.params.moduleId
     if(moduleId !== previousModuleId) {
       this.props.findLessonsForModule(moduleId)
+    }
+    const lessonId = this.props.match.params.lessonId
+    const previousLessonId = prevProps.match.params.lessonId
+    if(lessonId !== previousLessonId){
+      this.props.findTopicsForLesson(lessonId)
     }
   }
   
@@ -73,6 +83,7 @@ const stateToProperty = (state) => ({
 const propertyToDispatchMapper = (dispatch) => ({
   findLessonsForModule: (moduleId) => findLessons(dispatch, moduleId),
   findModulesForCourse: (courseId) => findModules(dispatch, courseId),
+  findTopicsForLesson: (lessonId) => findTopics(dispatch, lessonId),
   findCourseById: (courseId) =>
     findCourseById(courseId).then((actualCourse) =>
       dispatch({

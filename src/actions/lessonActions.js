@@ -20,8 +20,8 @@ export const updateLesson = (dispatch, lesson) =>
     })
   );
 
-export const createModule = (dispatch, module, lesson) =>
-  lessonService.createLesson(module._id, lesson).then((actualLesson) =>
+export const createLesson = (dispatch, moduleId, lesson) =>
+  lessonService.createLesson(moduleId, lesson).then((actualLesson) =>
     dispatch({
       type: CREATE_LESSON,
       lesson: actualLesson,
@@ -33,6 +33,7 @@ export const findLessons = (dispatch, moduleId) => {
     dispatch({
       type: FIND_LESSON_FOR_MODULE,
       lessons: actualLessons,
+      moduleId: moduleId
     })
   );
 };
