@@ -1,59 +1,81 @@
 import React from "react";
+import { connect } from "react-redux";
+import {
+  DELETE_MODULE,
+  CREATE_MODULE,
+  UPDATE_MODULE,
+  FIND_MODULE_FOR_COURSE,
+  updateModule,
+  createModule,
+  deleteModule,
+  findModules,
+} from "../actions/moduleActions";
+import { Link } from "react-router-dom";
 
-class ModuleListComponent extends React.Component {
-  render() {
-    return (
-        <ul className="list-group wbdv-module-list">
-          <li className="list-group-item wbdv-module-item wbdv-module-item-title">
-            Module 1
-            <a
-              href="#"
-              className="fas fa-times float-right wbdv-module-item-delete-btn"
-            ></a>
-          </li>
-          <li className="list-group-item wbdv-module-item wbdv-module-item-title">
-            Module 2
-            <a
-              href="#"
-              className="fas fa-times float-right wbdv-module-item-delete-btn"
-            ></a>
-          </li>
-          <li className="list-group-item active wbdv-module-item wbdv-module-item-title">
-            Module 3
-            <a
-              href="#"
-              className="fas fa-times float-right wbdv-module-item-delete-btn"
-            ></a>
-          </li>
-          <li className="list-group-item wbdv-module-item wbdv-module-item-title">
-            Module 4
-            <a
-              href="#"
-              className="fas fa-times float-right wbdv-module-item-delete-btn"
-            ></a>
-          </li>
-          <li className="list-group-item wbdv-module-item wbdv-module-item-title">
-            Module 5
-            <a
-              href="#"
-              className="fas fa-times float-right wbdv-module-item-delete-btn"
-            ></a>
-          </li>
-          <li className="list-group-item wbdv-module-item wbdv-module-item-title">
-            Module 6
-            <a
-              href="#"
-              className="fas fa-times float-right wbdv-module-item-delete-btn"
-            ></a>
-          </li>
-          <li className="list-group list-group-flush">
-            <button href="#" className="wbdv-module-item-add-btn ml-auto btn">
-              <i className="fas fa-plus"></i>
-            </button>
-          </li>
-        </ul>
-    );
-  }
-}
+const ModuleListComponent = ({
+  course,
+  modules,
+  deleteModule,
+  createModule,
+  updateModule,
+}) => {
+  console.log(modules)
+  return (
+    <div>
+      
+    <ul className="list-group wbdv-module-list">
+      {modules.map((module) => (
+        <li key={module._id}>
+          <button onClick={() => deleteModule(module)}>Delete</button>
+          {module.editing && (
+            <span>
+              <button
+                onClick={() => updateModule({ ...module, editing: false })}
+                >
+                Ok
+              </button>
+              <input
+                onChange={(event) =>
+                  updateModule({ ...module, title: event.target.value })
+                }
+                value={module.title}
+                />
+            </span>
+          )}
+          {!module.editing && (
+            <span>
+              <button
+                onClick={() => updateModule({ ...module, editing: true })}
+                >
+                Edit
+              </button>
+              <Link to={`/edit/${course._id}/modules/${module._id}`}>
+                {module.title}
+              </Link>
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+    <button onClick={() => createModule(course, {title: "New Module"})}>
+      Create Module
+    </button>
+      </div>
+  );
+};
 
-export default ModuleListComponent;
+const stateToPropertyMapper = (state) => ({
+  modules: state.moduleReducer.modules,
+  course: state.courseReducer.course,
+});
+
+const propertyToDispatchMapper = (dispatch) => ({
+  deleteModule: (module) => deleteModule(dispatch, module),
+  createModule: (course, module) => createModule(dispatch, course, module),
+  updateModule: (module) => updateModule(dispatch, module),
+});
+
+export default connect(
+  stateToPropertyMapper,
+  propertyToDispatchMapper
+)(ModuleListComponent);

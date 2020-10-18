@@ -11,15 +11,15 @@ export const createLesson = (moduleId, lesson) => {
     headers: {
       "content-type": "application/json",
     },
-  }).then((response = response.json()));
+  }).then(response => response.json());
 };
 
 export const findLessonsForModule = (moduleId) => {
-  return fetch(`${modulesUrl}/${moduleId}/lessons`).then((response = response.json()));
+  return fetch(`${modulesUrl}/${moduleId}/lessons`).then(response => response.json());
 };
 
 export const findLesson = (lessonId) => {
-  return fetch(`${lessonsUrl}/${lessonId}`).then((response = response.json));
+  return fetch(`${lessonsUrl}/${lessonId}`).then(response => response.json);
 };
 
 export const updateLesson = (lessonId, lesson) => {
@@ -29,13 +29,13 @@ export const updateLesson = (lessonId, lesson) => {
     headers: {
       "content-type": "application/json",
     },
-  }).then((response = response.json()));
+  }).then(response => response.json());
 };
 
 export const deleteLesson = (lessonId) => {
   return fetch(`${lessonsUrl}/${lessonId}`, {
     method: "DELETE",
-  }).then((response = response.json()));
+  }).then(response => response.json());
 };
 
 export default {

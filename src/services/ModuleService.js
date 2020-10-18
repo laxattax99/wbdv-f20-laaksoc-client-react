@@ -11,15 +11,17 @@ export const createModule = (courseId, module) => {
     headers: {
       "content-type": "application/json",
     },
-  }).then((response = response.json()));
+  }).then((response => response.json()));
 };
 
 export const findModulesForCourse = (courseId) => {
-  return fetch(`${coursesUrl}/${courseId}/modules`).then((response = response.json()));
+  return fetch(`${coursesUrl}/${courseId}/modules`).then(
+    (response => response.json())
+  );
 };
 
 export const findModule = (moduleId) => {
-  return fetch(`${modulesUrl}/${moduleId}`).then((response = response.json));
+  return fetch(`${modulesUrl}/${moduleId}`).then((response => response.json));
 };
 
 export const updateModule = (moduleId, module) => {
@@ -29,13 +31,13 @@ export const updateModule = (moduleId, module) => {
     headers: {
       "content-type": "application/json",
     },
-  }).then((response = response.json()));
+  }).then((response => response.json()));
 };
 
 export const deleteModule = (moduleId) => {
   return fetch(`${modulesUrl}/${moduleId}`, {
     method: "DELETE",
-  }).then((response = response.json()));
+  }).then((response => response.json()));
 };
 
 export default {

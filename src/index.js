@@ -1,17 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import "bootstrap/dist/css/bootstrap.min.css"
-import CourseManagerComponent from './components/CourseManagerComponent';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import "bootstrap/dist/css/bootstrap.min.css";
+import CourseManagerComponent from "./components/CourseManagerComponent";
+import { combineReducers, createStore } from "redux";
+import moduleReducer from "./reducers/moduleReducer";
+import lessonReducer from "./reducers/lessonReducer";
+import topicReducer from "./reducers/topicReducer";
+import courseReducer from "./reducers/courseReducer";
+import { Provider } from "react-redux";
+
+const rootReducer = combineReducers({
+  moduleReducer,
+  lessonReducer,
+  topicReducer,
+  courseReducer
+});
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <div className="container-fluid">
-    <CourseManagerComponent/>
-  </div>
-  ,
-  document.getElementById('root')
+    <Provider store={store}>
+      <CourseManagerComponent />
+    </Provider>
+  </div>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

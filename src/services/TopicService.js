@@ -11,15 +11,15 @@ export const createTopic = (lessonId, topic) => {
     headers: {
       "content-type": "application/json",
     },
-  }).then((response = response.json()));
+  }).then(response => response.json());
 };
 
 export const findTopicsForLesson = (lessonId) => {
-  return fetch(`${lessonsUrl}/${lessonId}/topics`).then((response = response.json()));
+  return fetch(`${lessonsUrl}/${lessonId}/topics`).then(response => response.json());
 };
 
 export const findTopic = (topicId) => {
-  return fetch(`${topicsUrl}/${topicId}`).then((response = response.json));
+  return fetch(`${topicsUrl}/${topicId}`).then(response => response.json);
 };
 
 export const updateTopic = (topicId, topic) => {
@@ -29,13 +29,13 @@ export const updateTopic = (topicId, topic) => {
     headers: {
       "content-type": "application/json",
     },
-  }).then((response = response.json()));
+  }).then(response => response.json());
 };
 
 export const deleteTopic = (topicId) => {
   return fetch(`${topicsUrl}/${topicId}`, {
     method: "DELETE",
-  }).then((response = response.json()));
+  }).then(response => response.json());
 };
 
 export default {

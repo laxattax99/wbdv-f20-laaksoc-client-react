@@ -21,7 +21,7 @@ export const updateModule = (dispatch, module) =>
   );
 
 export const createModule = (dispatch, course, module) =>
-  moduleService.createModuleForCourse(course._id, module).then((actualModule) =>
+  moduleService.createModule(course._id, module).then((actualModule) =>
     dispatch({
       type: CREATE_MODULE,
       module: actualModule,

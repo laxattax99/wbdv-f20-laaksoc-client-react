@@ -13,7 +13,6 @@ class CourseManagerComponent extends React.Component {
 
   componentDidMount() {
   this.getCourses();
-  console.log('mount')
   }
 
   getCourses =() => {
@@ -80,7 +79,8 @@ class CourseManagerComponent extends React.Component {
               )}
             />
             <Route
-            path="/course/edit/:courseId"
+            path={["/course/edit/:courseId",
+          "course/edit/:courseId/modules/:moduleId"]}
             exact component={CourseEditorComponent}
             />
         </Router>
