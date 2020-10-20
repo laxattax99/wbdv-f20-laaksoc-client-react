@@ -30,7 +30,6 @@ class CourseEditorComponent extends React.Component {
     const moduleId = this.props.match.params.moduleId
     const lessonId = this.props.match.params.lessonId
     const topicId = this.props.match.params.topicId
-    console.log(topicId)
     this.props.findCourseById(courseId)
     this.props.findModulesForCourse(courseId)
     if(moduleId) {
