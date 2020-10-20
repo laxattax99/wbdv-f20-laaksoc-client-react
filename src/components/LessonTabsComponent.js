@@ -47,7 +47,7 @@ const LessonTabsComponent = ({
           {!lesson.editing && (
             <span>
               <Link
-                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`} color={lesson.color}
+                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`}
                 style={lesson._id === activeLesson ? { color: "#fff" } : null}
               >
                 {lesson.title}

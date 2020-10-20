@@ -46,7 +46,7 @@ const TopicPillsComponent = ({
           {!topic.editing && (
             <span>
               <Link
-                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`} color={topic.color}
+                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}
                 style={topic._id === activeTopic._id ? { color: "#fff" } : null}
               >
                 {topic.title}
