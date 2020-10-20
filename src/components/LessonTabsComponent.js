@@ -22,12 +22,19 @@ const LessonTabsComponent = ({
   deleteLesson,
   createLesson,
   updateLesson,
-  activeLesson
+  activeLesson,
 }) => {
   return (
     <ul className="nav nav-tabs wbdv-lesson-tabs">
       {lessons.map((lesson) => (
-        <li key={lesson._id} style={lesson._id === activeLesson ? {backgroundColor: '#007bff'} : null}>
+        <li
+          key={lesson._id}
+          className={
+            lesson._id === activeLesson || lesson.editing
+              ? "nav-item nav-link active"
+              : "nav-item nav-link"
+          }
+        >
           {lesson.editing && (
             <span>
               <input
@@ -42,13 +49,15 @@ const LessonTabsComponent = ({
               >
                 <FontAwesomeIcon icon={faCheck} />
               </button>
+              <button onClick={() => deleteLesson(lesson)} className="btn">
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
             </span>
           )}
           {!lesson.editing && (
             <span>
               <Link
                 to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`}
-                style={lesson._id === activeLesson ? { color: "#fff" } : null}
               >
                 {lesson.title}
               </Link>
@@ -60,9 +69,6 @@ const LessonTabsComponent = ({
               </button>
             </span>
           )}
-          <button onClick={() => deleteLesson(lesson)} className="btn">
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
         </li>
       ))}
       <li className="nav-item">
@@ -81,7 +87,7 @@ const stateToPropertyMapper = (state) => ({
   lessons: state.lessonReducer.lessons,
   course: state.courseReducer.course,
   moduleId: state.lessonReducer.moduleId,
-  activeLesson: state.topicReducer.lessonId
+  activeLesson: state.topicReducer.lessonId,
 });
 
 const propertyToDispatchMapper = (dispatch) => ({

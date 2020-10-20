@@ -29,7 +29,14 @@ const TopicPillsComponent = ({
   return (
     <ul className="nav nav-pills wbdv-topic-pill-list">
       {topics.map((topic) => (
-        <li key={topic._id} style={topic._id === activeTopic._id ? {backgroundColor: '#007bff'} : null}>
+        <li
+          key={topic._id}
+          className={
+            topic._id === activeTopic._id || topic.editing
+              ? "nav-item nav-link active"
+              : "nav-item nav-link"
+          }
+        >
           {topic.editing && (
             <span>
               <input
@@ -38,8 +45,14 @@ const TopicPillsComponent = ({
                 }
                 value={topic.title}
               />
-              <button onClick={() => updateTopic({ ...topic, editing: false })} className="btn">
+              <button
+                onClick={() => updateTopic({ ...topic, editing: false })}
+                className="btn"
+              >
                 <FontAwesomeIcon icon={faCheck} />
+              </button>
+              <button onClick={() => deleteTopic(topic)} className="btn">
+                <FontAwesomeIcon icon={faTimes} />
               </button>
             </span>
           )}
@@ -51,14 +64,14 @@ const TopicPillsComponent = ({
               >
                 {topic.title}
               </Link>
-              <button onClick={() => updateTopic({ ...topic, editing: true })} className="btn">
+              <button
+                onClick={() => updateTopic({ ...topic, editing: true })}
+                className="btn"
+              >
                 <FontAwesomeIcon icon={faEdit} />
               </button>
             </span>
           )}
-          <button onClick={() => deleteTopic(topic)} className="btn">
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
         </li>
       ))}
       <li className="nav-item">
@@ -78,7 +91,7 @@ const stateToPropertyMapper = (state) => ({
   course: state.courseReducer.course,
   moduleId: state.lessonReducer.moduleId,
   lessonId: state.topicReducer.lessonId,
-  activeTopic: state.topicReducer.topic
+  activeTopic: state.topicReducer.topic,
 });
 
 const propertyToDispatchMapper = (dispatch) => ({

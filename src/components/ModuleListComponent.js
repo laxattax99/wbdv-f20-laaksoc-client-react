@@ -34,7 +34,7 @@ const ModuleListComponent = ({
           <li
             key={module._id}
             className={
-              module._id === activeModule
+              module._id === activeModule || module.editing
                 ? "list-group-item active"
                 : "list-group-item"
             }
@@ -52,6 +52,9 @@ const ModuleListComponent = ({
                   className="btn"
                 >
                   <FontAwesomeIcon icon={faCheck} />
+                </button>
+                <button onClick={() => deleteModule(module)} className="btn">
+                  <FontAwesomeIcon icon={faTimes} />
                 </button>
               </span>
             )}
@@ -71,9 +74,6 @@ const ModuleListComponent = ({
                 </button>
               </span>
             )}
-            <button onClick={() => deleteModule(module)} className="btn">
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
           </li>
         ))}
       </ul>
