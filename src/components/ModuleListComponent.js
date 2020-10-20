@@ -25,12 +25,20 @@ const ModuleListComponent = ({
   deleteModule,
   createModule,
   updateModule,
+  activeModule,
 }) => {
   return (
     <div>
       <ul className="list-group wbdv-module-list">
         {modules.map((module) => (
-          <li key={module._id} className="list-group-item">
+          <li
+            key={module._id}
+            className={
+              module._id === activeModule
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+          >
             {module.editing && (
               <span>
                 <input
@@ -49,7 +57,10 @@ const ModuleListComponent = ({
             )}
             {!module.editing && (
               <span>
-                <Link to={`/course/edit/${course._id}/modules/${module._id}`}>
+                <Link
+                  to={`/course/edit/${course._id}/modules/${module._id}`}
+                  style={module._id === activeModule ? { color: "#fff" } : null}
+                >
                   {module.title}
                 </Link>
                 <button
@@ -79,6 +90,7 @@ const ModuleListComponent = ({
 const stateToPropertyMapper = (state) => ({
   modules: state.moduleReducer.modules,
   course: state.courseReducer.course,
+  activeModule: state.lessonReducer.moduleId,
 });
 
 const propertyToDispatchMapper = (dispatch) => ({

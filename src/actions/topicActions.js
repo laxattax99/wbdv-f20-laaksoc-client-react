@@ -3,6 +3,7 @@ export const DELETE_TOPIC = "DELETE_TOPIC";
 export const UPDATE_TOPIC = "UPDATE_TOPIC";
 export const CREATE_TOPIC = "CREATE_TOPIC";
 export const FIND_TOPICS_FOR_LESSONS = "FIND_TOPICS_FOR_LESSONS";
+export const FIND_TOPIC = "FIND_TOPIC";
 
 export const deleteTopic = (dispatch, topic) =>
   topicService.deleteTopic(topic._id).then((status) =>
@@ -33,7 +34,16 @@ export const findTopics = (dispatch, lessonId) => {
     dispatch({
       type: FIND_TOPICS_FOR_LESSONS,
       topics: actualTopics,
-      lessonId: lessonId
+      lessonId: lessonId,
+    })
+  );
+};
+
+export const findTopic = (dispatch, topicId) => {
+  topicService.findTopic(topicId).then((actualTopic) =>
+    dispatch({
+      type: FIND_TOPIC,
+      topic: actualTopic,
     })
   );
 };

@@ -4,11 +4,13 @@ import {
   UPDATE_TOPIC,
   CREATE_TOPIC,
   FIND_TOPICS_FOR_LESSONS,
+  FIND_TOPIC,
 } from "../actions/topicActions";
 
 const initialState = {
   topics: [],
   lessonId: "",
+  topic: {}
 };
 
 const topicReducer = (state = initialState, action) => {
@@ -36,6 +38,11 @@ const topicReducer = (state = initialState, action) => {
           topic._id === action.topic._id ? action.topic : topic
         ),
       };
+    case FIND_TOPIC:
+      return {
+        ...state,
+        topic: action.topic
+      }
     default:
       return state;
   }

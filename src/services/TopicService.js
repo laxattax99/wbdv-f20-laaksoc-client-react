@@ -19,7 +19,7 @@ export const findTopicsForLesson = (lessonId) => {
 };
 
 export const findTopic = (topicId) => {
-  return fetch(`${topicsUrl}/${topicId}`).then(response => response.json);
+  return fetch(`${topicsUrl}/${topicId}`).then(response => response.json());
 };
 
 export const updateTopic = (topicId, topic) => {

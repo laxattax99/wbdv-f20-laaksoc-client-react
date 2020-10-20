@@ -1,8 +1,17 @@
 import React from "react";
 // import courseService from "../services/CourseService";
-import {findAllCourses, createCourse, deleteCourse} from '../services/CourseService'
+import {
+  findAllCourses,
+  createCourse,
+  deleteCourse,
+} from "../services/CourseService";
 import CourseTableComponent from "./CourseTableComponent";
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import CourseGridComponent from "./CourseGridComponent";
 import CourseEditorComponent from "./CourseEditorComponent";
 
@@ -12,14 +21,12 @@ class CourseManagerComponent extends React.Component {
   };
 
   componentDidMount() {
-  this.getCourses();
+    this.getCourses();
   }
 
-  getCourses =() => {
-    findAllCourses().then((courses) => 
-    this.setState({courses: courses})
-    );
-  }
+  getCourses = () => {
+    findAllCourses().then((courses) => this.setState({ courses: courses }));
+  };
 
   createCourse = () => {
     const newCourse = {
@@ -28,9 +35,7 @@ class CourseManagerComponent extends React.Component {
       lastUpdated: "yesterday",
     };
 
-
-    
-      createCourse(newCourse)
+    createCourse(newCourse)
       .then((actualCourse) =>
         this.setState(function (prevState) {
           return {
@@ -50,40 +55,45 @@ class CourseManagerComponent extends React.Component {
   };
 
   render() {
-    const { courses } = this.state
     return (
       <div className="container-fluid">
         <Router>
-            {/* <Link to="/course/table">Table</Link> |
+          {/* <Link to="/course/table">Table</Link> |
             <Link to="/course/grid">Grid</Link> */}
-            <Route exact path='/'>
-              <Redirect to='/course/table'/>
-            </Route>
-            {console.log('render', this.state.courses)}
-            <Route
-              path="/course/table"
-              render={() => 
-                <CourseTableComponent 
+          <Route exact path="/">
+            <Redirect to="/course/table" />
+          </Route>
+          {console.log("render", this.state.courses)}
+          <Route
+            path="/course/table"
+            render={() => (
+              <CourseTableComponent
                 courses={this.state.courses}
                 deleteCourse={this.deleteCourse}
-                createCourse={this.createCourse} />
-              }
-            />
-            <Route
-              path="/course/grid"
-              render={() => (
-                <CourseGridComponent 
+                createCourse={this.createCourse}
+              />
+            )}
+          />
+          <Route
+            path="/course/grid"
+            render={() => (
+              <CourseGridComponent
                 courses={this.state.courses}
                 deleteCourse={this.deleteCourse}
-                createCourse={this.createCourse} />
-              )}
-            />
-            <Route
-            path={["/course/edit/:courseId",
-          "/course/edit/:courseId/modules/:moduleId",
-        "/course/edit/:courseId/modules/:moduleId/lessons/:lessonId"]}
-            exact component={CourseEditorComponent}
-            />
+                createCourse={this.createCourse}
+              />
+            )}
+          />
+          <Route
+            path={[
+              "/course/edit/:courseId",
+              "/course/edit/:courseId/modules/:moduleId",
+              "/course/edit/:courseId/modules/:moduleId/lessons/:lessonId",
+              "/course/edit/:courseId/modules/:moduleId/lessons/:lessonId/topics/:topicId",
+            ]}
+            exact
+            component={CourseEditorComponent}
+          />
         </Router>
       </div>
     );

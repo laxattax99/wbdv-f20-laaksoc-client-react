@@ -10,7 +10,7 @@ import lessonService from "../services/LessonService";
 import moduleService from "../services/ModuleService";
 import { findModules, createModule, updateModule } from "../actions/moduleActions.js";
 import {findLessons} from "../actions/lessonActions.js";
-import {findTopics} from "../actions/topicActions.js";
+import {findTopics, findTopic} from "../actions/topicActions.js";
 import {connect} from "react-redux";
 
 class CourseEditorComponent extends React.Component {
@@ -29,6 +29,8 @@ class CourseEditorComponent extends React.Component {
     const courseId = this.props.match.params.courseId
     const moduleId = this.props.match.params.moduleId
     const lessonId = this.props.match.params.lessonId
+    const topicId = this.props.match.params.topicId
+    console.log(topicId)
     this.props.findCourseById(courseId)
     this.props.findModulesForCourse(courseId)
     if(moduleId) {
@@ -36,6 +38,9 @@ class CourseEditorComponent extends React.Component {
     }
     if(lessonId) {
       this.props.findTopicsForLesson(lessonId)
+    }
+    if(topicId) {
+      this.props.findTopic(topicId)
     }
   }
 
@@ -50,6 +55,11 @@ class CourseEditorComponent extends React.Component {
     if(lessonId !== previousLessonId){
       this.props.findTopicsForLesson(lessonId)
     }
+    const topicId = this.props.match.params.topicId
+    const previousTopicId = prevProps.match.params.topicId
+    if(topicId !== previousTopicId){
+      this.props.findTopic(topicId)
+    }
   }
   
   render() {
@@ -61,11 +71,11 @@ class CourseEditorComponent extends React.Component {
           </Link>
           {this.props.course.title}
         </h1>
-        <div class="row">
-          <div class="col-4">
+        <div className="row">
+          <div className="col-4">
             <ModuleListComponent />
           </div>
-          <div class="col-8">
+          <div className="col-8">
             <LessonTabsComponent />
             <br />
             <TopicPillsComponent />
@@ -84,6 +94,7 @@ const propertyToDispatchMapper = (dispatch) => ({
   findLessonsForModule: (moduleId) => findLessons(dispatch, moduleId),
   findModulesForCourse: (courseId) => findModules(dispatch, courseId),
   findTopicsForLesson: (lessonId) => findTopics(dispatch, lessonId),
+  findTopic: (topicId) => findTopic(dispatch, topicId),
   findCourseById: (courseId) =>
     findCourseById(courseId).then((actualCourse) =>
       dispatch({

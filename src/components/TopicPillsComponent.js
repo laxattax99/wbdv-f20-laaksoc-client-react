@@ -24,11 +24,12 @@ const TopicPillsComponent = ({
   deleteTopic,
   createTopic,
   updateTopic,
+  activeTopic,
 }) => {
   return (
-    <ul class="nav nav-pills wbdv-topic-pill-list">
+    <ul className="nav nav-pills wbdv-topic-pill-list">
       {topics.map((topic) => (
-        <li key={topic._id} className="nav-item">
+        <li key={topic._id} style={topic._id === activeTopic._id ? {backgroundColor: '#007bff'} : null}>
           {topic.editing && (
             <span>
               <input
@@ -45,7 +46,8 @@ const TopicPillsComponent = ({
           {!topic.editing && (
             <span>
               <Link
-                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}
+                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`} color={topic.color}
+                style={topic._id === activeTopic._id ? { color: "#fff" } : null}
               >
                 {topic.title}
               </Link>
@@ -59,7 +61,7 @@ const TopicPillsComponent = ({
           </button>
         </li>
       ))}
-      <li class="nav-item">
+      <li className="nav-item">
         <button
           onClick={() => createTopic(lessonId, { title: "New topic" })}
           className="nav-link wbdv-lesson-add-btn btn btn-success"
@@ -76,6 +78,7 @@ const stateToPropertyMapper = (state) => ({
   course: state.courseReducer.course,
   moduleId: state.lessonReducer.moduleId,
   lessonId: state.topicReducer.lessonId,
+  activeTopic: state.topicReducer.topic
 });
 
 const propertyToDispatchMapper = (dispatch) => ({
