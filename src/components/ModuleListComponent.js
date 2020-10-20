@@ -1,5 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus,
+  faEdit,
+  faCheck,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   DELETE_MODULE,
   CREATE_MODULE,
@@ -23,40 +30,47 @@ const ModuleListComponent = ({
     <div>
       <ul className="list-group wbdv-module-list">
         {modules.map((module) => (
-          <li key={module._id}>
-            <button onClick={() => deleteModule(module)}>Delete</button>
+          <li key={module._id} className="list-group-item">
             {module.editing && (
               <span>
-                <button
-                  onClick={() => updateModule({ ...module, editing: false })}
-                >
-                  Ok
-                </button>
                 <input
                   onChange={(event) =>
                     updateModule({ ...module, title: event.target.value })
                   }
                   value={module.title}
                 />
+                <button
+                  onClick={() => updateModule({ ...module, editing: false })}
+                  className="btn"
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </button>
               </span>
             )}
             {!module.editing && (
               <span>
-                <button
-                  onClick={() => updateModule({ ...module, editing: true })}
-                >
-                  Edit
-                </button>
                 <Link to={`/course/edit/${course._id}/modules/${module._id}`}>
                   {module.title}
                 </Link>
+                <button
+                  onClick={() => updateModule({ ...module, editing: true })}
+                  className="btn"
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
               </span>
             )}
+            <button onClick={() => deleteModule(module)} className="btn">
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
           </li>
         ))}
       </ul>
-      <button onClick={() => createModule(course, { title: "New Module" })}>
-        Create Module
+      <button
+        onClick={() => createModule(course, { title: "New Module" })}
+        className="btn"
+      >
+        <FontAwesomeIcon icon={faPlus} />
       </button>
     </div>
   );

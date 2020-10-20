@@ -1,6 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faEdit,
+  faCheck,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import {
   updateLesson,
@@ -8,7 +13,7 @@ import {
   deleteLesson,
   findLessons,
 } from "../actions/lessonActions";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LessonTabsComponent = ({
   course,
@@ -21,39 +26,48 @@ const LessonTabsComponent = ({
   return (
     <ul class="nav nav-tabs wbdv-lesson-tabs">
       {lessons.map((lesson) => (
-        <li key={lesson._id}>
-          <button onClick={() => deleteLesson(lesson)}>Delete</button>
+        <li key={lesson._id} className="nav-item">
           {lesson.editing && (
             <span>
-              <button
-                onClick={() => updateLesson({ ...lesson, editing: false })}
-              >
-                Ok
-              </button>
               <input
                 onChange={(event) =>
                   updateLesson({ ...lesson, title: event.target.value })
                 }
                 value={lesson.title}
               />
+              <button
+                onClick={() => updateLesson({ ...lesson, editing: false })}
+                className="btn"
+              >
+                <FontAwesomeIcon icon={faCheck} />
+              </button>
             </span>
           )}
           {!lesson.editing && (
             <span>
-              <button
-                onClick={() => updateLesson({ ...lesson, editing: true })}
+              <Link
+                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`}
               >
-                Edit
-              </button>
-              <Link to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`}>
                 {lesson.title}
               </Link>
+              <button
+                onClick={() => updateLesson({ ...lesson, editing: true })}
+                className="btn"
+              >
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
             </span>
           )}
+          <button onClick={() => deleteLesson(lesson)} className="btn">
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
         </li>
       ))}
       <li class="nav-item">
-        <button onClick={() => createLesson(moduleId, { title: "New lesson" })} className="nav-link wbdv-lesson-add-btn btn btn-success">
+        <button
+          onClick={() => createLesson(moduleId, { title: "New lesson" })}
+          className="nav-link btn btn-success"
+        >
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </li>
@@ -64,7 +78,7 @@ const LessonTabsComponent = ({
 const stateToPropertyMapper = (state) => ({
   lessons: state.lessonReducer.lessons,
   course: state.courseReducer.course,
-  moduleId: state.lessonReducer.moduleId
+  moduleId: state.lessonReducer.moduleId,
 });
 
 const propertyToDispatchMapper = (dispatch) => ({

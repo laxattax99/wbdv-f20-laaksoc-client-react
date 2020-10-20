@@ -1,6 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faEdit,
+  faCheck,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import {
   updateTopic,
@@ -8,7 +13,7 @@ import {
   deleteTopic,
   findTopics,
 } from "../actions/topicActions";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { updateLesson } from "../services/LessonService";
 
 const TopicPillsComponent = ({
@@ -23,39 +28,42 @@ const TopicPillsComponent = ({
   return (
     <ul class="nav nav-pills wbdv-topic-pill-list">
       {topics.map((topic) => (
-        <li>
-          <button onClick={() => deleteTopic(topic)}>Delete</button>
+        <li key={topic._id} className="nav-item">
           {topic.editing && (
             <span>
-              <button
-                onClick={() => updateTopic({ ...topic, editing: false })}
-              >
-                Ok
-              </button>
               <input
                 onChange={(event) =>
                   updateTopic({ ...topic, title: event.target.value })
                 }
                 value={topic.title}
               />
+              <button onClick={() => updateTopic({ ...topic, editing: false })} className="btn">
+                <FontAwesomeIcon icon={faCheck} />
+              </button>
             </span>
           )}
           {!topic.editing && (
             <span>
-              <button
-                onClick={() => updateTopic({ ...topic, editing: true })}
+              <Link
+                to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}
               >
-                Edit
-              </button>
-              <Link to={`/course/edit/${course._id}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}>
                 {topic.title}
               </Link>
+              <button onClick={() => updateTopic({ ...topic, editing: true })} className="btn">
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
             </span>
           )}
+          <button onClick={() => deleteTopic(topic)} className="btn">
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
         </li>
       ))}
       <li class="nav-item">
-        <button onClick={() => createTopic(lessonId, { title: "New topic" })} className="nav-link wbdv-lesson-add-btn btn btn-success">
+        <button
+          onClick={() => createTopic(lessonId, { title: "New topic" })}
+          className="nav-link wbdv-lesson-add-btn btn btn-success"
+        >
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </li>
@@ -67,7 +75,7 @@ const stateToPropertyMapper = (state) => ({
   topics: state.topicReducer.topics,
   course: state.courseReducer.course,
   moduleId: state.lessonReducer.moduleId,
-  lessonId: state.topicReducer.lessonId
+  lessonId: state.topicReducer.lessonId,
 });
 
 const propertyToDispatchMapper = (dispatch) => ({
