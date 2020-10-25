@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { findCourseById } from "../services/CourseService";
-import lessonService from "../services/LessonService";
-import moduleService from "../services/ModuleService";
 import { findModules, createModule, updateModule } from "../actions/moduleActions.js";
 import {findLessons} from "../actions/lessonActions.js";
 import {findTopics, findTopic} from "../actions/topicActions.js";
+import {findWidgetsForTopic} from "../actions/widgetActions.js";
 import {connect} from "react-redux";
+import WidgetListComponent from "./WidgetListComponent";
 
 class CourseEditorComponent extends React.Component {
   state = {
@@ -40,6 +40,8 @@ class CourseEditorComponent extends React.Component {
     }
     if(topicId) {
       this.props.findTopic(topicId)
+      this.props.findWidgetsForTopic(topicId)
+
     }
   }
 
@@ -58,6 +60,7 @@ class CourseEditorComponent extends React.Component {
     const previousTopicId = prevProps.match.params.topicId
     if(topicId !== previousTopicId){
       this.props.findTopic(topicId)
+      this.props.findWidgetsForTopic(topicId)
     }
   }
   
@@ -79,6 +82,8 @@ class CourseEditorComponent extends React.Component {
             <br />
             <TopicPillsComponent />
             <br />
+            <WidgetListComponent />
+            <br />
           </div>
         </div>
       </div>
@@ -94,6 +99,7 @@ const propertyToDispatchMapper = (dispatch) => ({
   findModulesForCourse: (courseId) => findModules(dispatch, courseId),
   findTopicsForLesson: (lessonId) => findTopics(dispatch, lessonId),
   findTopic: (topicId) => findTopic(dispatch, topicId),
+  findWidgetsForTopic: (topicId) => findWidgetsForTopic(dispatch, topicId),
   findCourseById: (courseId) =>
     findCourseById(courseId).then((actualCourse) =>
       dispatch({
