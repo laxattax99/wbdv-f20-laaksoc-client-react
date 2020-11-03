@@ -3,11 +3,13 @@ import {
   UPDATE_WIDGET,
   CREATE_WIDGET,
   FIND_WIDGETS_FOR_TOPIC,
+  TOGGLE_PREVIEW_MODE,
 } from "../actions/widgetActions";
 
 const initialState = {
   widgets: [],
   topicId: "",
+  previewMode: true,
 };
 
 const widgetReducer = (state = initialState, action) => {
@@ -36,6 +38,11 @@ const widgetReducer = (state = initialState, action) => {
         widgets: state.widgets.map((widget) =>
           widget.id === action.widget.id ? action.widget : widget
         ),
+      };
+    case TOGGLE_PREVIEW_MODE:
+      return {
+        ...state,
+        previewMode: action.previewMode,
       };
     default:
       return state;

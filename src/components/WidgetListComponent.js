@@ -7,10 +7,12 @@ import {
   CREATE_WIDGET,
   UPDATE_WIDGET,
   FIND_WIDGETS_FOR_TOPIC,
+  TOGGLE_PREVIEW_MODE,
   updateWidget,
   createWidget,
   deleteWidget,
   findWidgetsForTopic,
+  togglePreviewMode,
 } from "../actions/widgetActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +23,8 @@ const WidgetListComponent = ({
   createWidgetForTopic,
   updateWidget,
   deleteWidget,
+  previewMode,
+  togglePreviewMode,
 }) => {
   const handleWidgetChange = (event, widgetToChange) => {
     updateWidget({ ...widgetToChange, type: event.target.value });
@@ -54,10 +58,6 @@ const WidgetListComponent = ({
     return 0;
   };
 
-  const previewMode = () => {
-    console.log('preview')
-  }
-
   widgets.sort(compareWidgets);
 
   return (
@@ -65,10 +65,11 @@ const WidgetListComponent = ({
       <h3>Widgets</h3>
       <div className="custom-control custom-switch">
         <input
-        onClick ={() => previewMode()}
+          onClick={() => togglePreviewMode(previewMode)}
           type="checkbox"
           className="custom-control-input"
           id="previewSwitch"
+          defaultChecked
         ></input>
         <label className="custom-control-label" htmlFor="previewSwitch">
           Preview
@@ -88,6 +89,7 @@ const WidgetListComponent = ({
                 moveWidgetUp={() => moveWidgetUp(widget)}
                 moveWidgetDown={() => moveWidgetDown(widget)}
                 numberOfWidgets={widgets.length}
+                previewMode={previewMode}
               />
             )}
             {widget.type === "PARAGRAPH" && (
@@ -101,6 +103,7 @@ const WidgetListComponent = ({
                 moveWidgetUp={() => moveWidgetUp(widget)}
                 moveWidgetDown={() => moveWidgetDown(widget)}
                 numberOfWidgets={widgets.length}
+                previewMode={previewMode}
               />
             )}
           </li>
@@ -119,15 +122,18 @@ const WidgetListComponent = ({
 const stateToPropertyMapper = (state) => ({
   widgets: state.widgetReducer.widgets,
   topicId: state.widgetReducer.topicId,
+  previewMode: state.widgetReducer.previewMode,
 });
 const propertyToDispatchMapper = (dispatch) => ({
   createWidgetForTopic: (topicId) =>
     createWidget(dispatch, topicId, {
       name: "NEW WIDGET",
-      type: "PARAGRAPH",
+      type: "HEADING",
+      size: 1,
     }),
   updateWidget: (widget) => updateWidget(dispatch, widget),
   deleteWidget: (widget) => deleteWidget(dispatch, widget),
+  togglePreviewMode: (currentMode) => togglePreviewMode(dispatch, currentMode),
 });
 export default connect(
   stateToPropertyMapper,

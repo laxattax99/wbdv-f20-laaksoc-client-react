@@ -3,6 +3,7 @@ export const DELETE_WIDGET = "DELETE_WIDGET";
 export const UPDATE_WIDGET = "UPDATE_WIDGET";
 export const CREATE_WIDGET = "CREATE_WIDGET";
 export const FIND_WIDGETS_FOR_TOPIC = "FIND_WIDGETS_FOR_TOPIC";
+export const TOGGLE_PREVIEW_MODE = "TOGGLE_PREVIEW_MODE";
 
 export const deleteWidget = (dispatch, widget) =>
   widgetService.deleteWidget(widget.id).then((status) =>
@@ -37,4 +38,11 @@ export const findWidgetsForTopic = (dispatch, topicId) => {
       topicId: topicId,
     })
   );
+};
+
+export const togglePreviewMode = (dispatch, currentPreviewMode) => {
+    return dispatch({
+      type: TOGGLE_PREVIEW_MODE,
+      previewMode: !currentPreviewMode,
+    })
 };

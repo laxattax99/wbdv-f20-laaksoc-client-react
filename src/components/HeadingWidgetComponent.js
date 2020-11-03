@@ -13,6 +13,7 @@ const HeadingWidget = ({
   moveWidgetUp,
   moveWidgetDown,
   numberOfWidgets,
+  previewMode,
 }) => {
   const updateHeadingSize = (event) => {
     const size = parseInt(event.target.value);
@@ -42,6 +43,7 @@ const HeadingWidget = ({
     <div className="container">
       <h3>
         {widget.name}
+        {previewMode === false && (
         <span className="float-right">
           {widget.widgetOrder > 0 && (
           <button onClick={() => moveWidgetUp()} className="btn btn-warning">
@@ -64,9 +66,11 @@ const HeadingWidget = ({
           >
             <FontAwesomeIcon icon={faTimes} />
           </button>
-        </span>
+        </span>)}
       </h3>
 
+      {previewMode === false && (
+      <div>
       <input
         onChange={(event) =>
           updateWidget({ ...widget, value: event.target.value })
@@ -96,6 +100,7 @@ const HeadingWidget = ({
         placeholder="Widget Name"
       />
       <br />
+      </div>)}
       <h4>Preview</h4>
       {getHeadingSize(widget)}
     </div>
