@@ -34,7 +34,6 @@ const WidgetListComponent = ({
 
   const switchWidgets = (widgetOrder1, widgetOrder2) => {
     const widget1 = widgets[widgetOrder1];
-    console.log(widgetOrder2);
     widget1.widgetOrder++;
     const widget2 = widgets[widgetOrder2];
     widget2.widgetOrder--;
