@@ -59,8 +59,21 @@ const WidgetListComponent = ({
     return 0;
   };
 
-  widgets.sort(compareWidgets);
+  // updates widgets if widget was removed from the list, then updates the list of widgets on the server
+  const updatedWidgetsAfterRemoval = (widgets, widget) => {
+    widgets.map((currentWidget) => {
+      if (currentWidget.widgetOrder > widget.widgetOrder) {
+        currentWidget.widgetOrder--;
+        return currentWidget;
+      }
+    });
+    const returnWidgets = widgets.filter(
+      (currentWidget) => currentWidget.id !== widget.id
+    );
+    updateAllWidgets(returnWidgets);
+  };
 
+  widgets.sort(compareWidgets);
   return (
     <div className="container">
       <h3>Widgets</h3>
@@ -107,6 +120,9 @@ const WidgetListComponent = ({
               moveWidgetDown={() => moveWidgetDown(widget)}
               numberOfWidgets={widgets.length}
               previewMode={previewMode}
+              updatedWidgetsAfterRemoval={() =>
+                updatedWidgetsAfterRemoval(widgets, widget)
+              }
             />
           )}
           {widget.type === "PARAGRAPH" && (
@@ -119,6 +135,9 @@ const WidgetListComponent = ({
               moveWidgetDown={() => moveWidgetDown(widget)}
               numberOfWidgets={widgets.length}
               previewMode={previewMode}
+              updatedWidgetsAfterRemoval={() =>
+                updatedWidgetsAfterRemoval(widgets, widget)
+              }
             />
           )}
         </div>

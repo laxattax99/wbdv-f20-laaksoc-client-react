@@ -5,13 +5,14 @@ export const CREATE_WIDGET = "CREATE_WIDGET";
 export const FIND_WIDGETS_FOR_TOPIC = "FIND_WIDGETS_FOR_TOPIC";
 export const TOGGLE_PREVIEW_MODE = "TOGGLE_PREVIEW_MODE";
 
-export const deleteWidget = (dispatch, widget) =>
+export const deleteWidget = (dispatch, widget) => {
   widgetService.deleteWidget(widget.id).then((status) =>
     dispatch({
       type: DELETE_WIDGET,
       widget: widget,
     })
   );
+};
 
 export const updateWidget = (dispatch, widget) => {
   dispatch({

@@ -15,7 +15,13 @@ const ParagraphWidget = ({
   moveWidgetDown,
   numberOfWidgets,
   previewMode,
+  updatedWidgetsAfterRemoval,
 }) => {
+  const deleteAndUpdateOtherWidgets = () => {
+    updatedWidgetsAfterRemoval();
+    deleteWidget(widget);
+  };
+
   return (
     <div className="card">
       <div className="card-body">
@@ -47,7 +53,7 @@ const ParagraphWidget = ({
                 <option value="HEADING">Heading</option>
               </select>
               <button
-                onClick={() => deleteWidget(widget)}
+                onClick={() => deleteAndUpdateOtherWidgets()}
                 className="btn btn-danger"
               >
                 <FontAwesomeIcon icon={faTimes} />

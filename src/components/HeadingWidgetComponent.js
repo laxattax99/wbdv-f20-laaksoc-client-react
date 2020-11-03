@@ -14,7 +14,13 @@ const HeadingWidget = ({
   moveWidgetDown,
   numberOfWidgets,
   previewMode,
+  updatedWidgetsAfterRemoval,
 }) => {
+  const deleteAndUpdateOtherWidgets = () => {
+    updatedWidgetsAfterRemoval();
+    deleteWidget(widget);
+  };
+
   const updateHeadingSize = (event) => {
     const size = parseInt(event.target.value);
     updateWidget({ ...widget, size: size });
@@ -70,7 +76,7 @@ const HeadingWidget = ({
                 <option value="HEADING">Heading</option>
               </select>
               <button
-                onClick={() => deleteWidget(widget)}
+                onClick={() => deleteAndUpdateOtherWidgets()}
                 className="btn btn-danger"
               >
                 <FontAwesomeIcon icon={faTimes} />
