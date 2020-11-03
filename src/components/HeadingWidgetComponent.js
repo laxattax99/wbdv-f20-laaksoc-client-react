@@ -40,69 +40,81 @@ const HeadingWidget = ({
   };
 
   return (
-    <div className="container">
-      <h3>
-        {widget.name}
-        {previewMode === false && (
-        <span className="float-right">
-          {widget.widgetOrder > 0 && (
-          <button onClick={() => moveWidgetUp()} className="btn btn-warning">
-            <FontAwesomeIcon icon={faArrowUp} />
-          </button>)}
-          {widget.widgetOrder < numberOfWidgets - 1 && (
-          <button onClick={() => moveWidgetDown()} className="btn btn-warning">
-            <FontAwesomeIcon icon={faArrowDown} />
-          </button>)}
-          <select
-            defaultValue={widget.type ? widget.type : "HEADING"}
-            onChange={(event) => handleWidgetChange(event)}
-          >
-            <option value="PARAGRAPH">Paragraph</option>
-            <option value="HEADING">Heading</option>
-          </select>
-          <button
-            onClick={() => deleteWidget(widget)}
-            className="btn btn-danger"
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
-        </span>)}
-      </h3>
+    <div className="card">
+      <div className="card-body">
+        <h3>
+          {widget.name}
+          {previewMode === false && (
+            <span className="float-right">
+              {widget.widgetOrder > 0 && (
+                <button
+                  onClick={() => moveWidgetUp()}
+                  className="btn btn-warning"
+                >
+                  <FontAwesomeIcon icon={faArrowUp} />
+                </button>
+              )}
+              {widget.widgetOrder < numberOfWidgets - 1 && (
+                <button
+                  onClick={() => moveWidgetDown()}
+                  className="btn btn-warning"
+                >
+                  <FontAwesomeIcon icon={faArrowDown} />
+                </button>
+              )}
+              <select
+                defaultValue={widget.type ? widget.type : "HEADING"}
+                onChange={(event) => handleWidgetChange(event)}
+              >
+                <option value="PARAGRAPH">Paragraph</option>
+                <option value="HEADING">Heading</option>
+              </select>
+              <button
+                onClick={() => deleteWidget(widget)}
+                className="btn btn-danger"
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            </span>
+          )}
+        </h3>
 
-      {previewMode === false && (
-      <div>
-      <input
-        onChange={(event) =>
-          updateWidget({ ...widget, value: event.target.value })
-        }
-        className="form-control"
-        placeholder="Heading Text"
-      />
-      <br />
-      <select
-        defaultValue={widget.size ? widget.size : 1}
-        onChange={(event) => updateHeadingSize(event, widget)}
-        className="form-control"
-      >
-        <option value="1">Heading 1</option>
-        <option value="2">Heading 2</option>
-        <option value="3">Heading 3</option>
-        <option value="4">Heading 4</option>
-        <option value="5">Heading 5</option>
-        <option value="6">Heading 6</option>
-      </select>
-      <br />
-      <input
-        onChange={(event) =>
-          updateWidget({ ...widget, name: event.target.value })
-        }
-        className="form-control"
-        placeholder="Widget Name"
-      />
-      <br />
-      </div>)}
-      <h4>Preview</h4>
-      {getHeadingSize(widget)}
+        {previewMode === false && (
+          <div>
+            <input
+              onChange={(event) =>
+                updateWidget({ ...widget, value: event.target.value })
+              }
+              className="form-control"
+              placeholder="Heading Text"
+            />
+            <br />
+            <select
+              defaultValue={widget.size ? widget.size : 1}
+              onChange={(event) => updateHeadingSize(event, widget)}
+              className="form-control"
+            >
+              <option value="1">Heading 1</option>
+              <option value="2">Heading 2</option>
+              <option value="3">Heading 3</option>
+              <option value="4">Heading 4</option>
+              <option value="5">Heading 5</option>
+              <option value="6">Heading 6</option>
+            </select>
+            <br />
+            <input
+              onChange={(event) =>
+                updateWidget({ ...widget, name: event.target.value })
+              }
+              className="form-control"
+              placeholder="Widget Name"
+            />
+            <br />
+          </div>
+        )}
+        <h4>Preview</h4>
+        {getHeadingSize(widget)}
+      </div>
     </div>
   );
 };

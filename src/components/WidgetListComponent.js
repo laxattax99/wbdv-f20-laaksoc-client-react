@@ -65,53 +65,65 @@ const WidgetListComponent = ({
   return (
     <div className="container">
       <h3>Widgets</h3>
-      <div className="custom-control custom-switch">
-        <input
-          onClick={() => togglePreviewMode(previewMode)}
-          type="checkbox"
-          className="custom-control-input"
-          id="previewSwitch"
-          defaultChecked
-        ></input>
-        <label className="custom-control-label" htmlFor="previewSwitch">
-          Preview
-        </label>
-      </div>
-      <button onClick={() => updateAllWidgets(widgets)} className="btn btn-success">Save</button>
-      <ul className="nav">
-        {widgets.map((widget) => (
-          <li key={widget.id}>
-            {widget.type === "HEADING" && (
-              <HeadingWidgetComponent
-                handleWidgetChange={(event) =>
-                  handleWidgetChange(event, widget)
-                }
-                widget={widget}
-                updateWidget={updateWidget}
-                deleteWidget={deleteWidget}
-                moveWidgetUp={() => moveWidgetUp(widget)}
-                moveWidgetDown={() => moveWidgetDown(widget)}
-                numberOfWidgets={widgets.length}
-                previewMode={previewMode}
-              />
-            )}
-            {widget.type === "PARAGRAPH" && (
-              <ParagraphWidgetComponent
-                handleWidgetChange={(event) =>
-                  handleWidgetChange(event, widget)
-                }
-                widget={widget}
-                updateWidget={updateWidget}
-                deleteWidget={deleteWidget}
-                moveWidgetUp={() => moveWidgetUp(widget)}
-                moveWidgetDown={() => moveWidgetDown(widget)}
-                numberOfWidgets={widgets.length}
-                previewMode={previewMode}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
+
+      <span
+        className="form-inline"
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          flexDirection: "row",
+          alignItems: "center",
+          margin: "16px",
+        }}
+      >
+        <div className="custom-control custom-switch">
+          <input
+            onClick={() => togglePreviewMode(previewMode)}
+            type="checkbox"
+            className="custom-control-input"
+            id="previewSwitch"
+            defaultChecked
+          ></input>
+          <label className="custom-control-label" htmlFor="previewSwitch">
+            Preview
+          </label>
+        </div>
+        <button
+          onClick={() => updateAllWidgets(widgets)}
+          className="btn btn-success"
+        >
+          Save
+        </button>
+      </span>
+
+      {widgets.map((widget) => (
+        <div key={widget.id}>
+          {widget.type === "HEADING" && (
+            <HeadingWidgetComponent
+              handleWidgetChange={(event) => handleWidgetChange(event, widget)}
+              widget={widget}
+              updateWidget={updateWidget}
+              deleteWidget={deleteWidget}
+              moveWidgetUp={() => moveWidgetUp(widget)}
+              moveWidgetDown={() => moveWidgetDown(widget)}
+              numberOfWidgets={widgets.length}
+              previewMode={previewMode}
+            />
+          )}
+          {widget.type === "PARAGRAPH" && (
+            <ParagraphWidgetComponent
+              handleWidgetChange={(event) => handleWidgetChange(event, widget)}
+              widget={widget}
+              updateWidget={updateWidget}
+              deleteWidget={deleteWidget}
+              moveWidgetUp={() => moveWidgetUp(widget)}
+              moveWidgetDown={() => moveWidgetDown(widget)}
+              numberOfWidgets={widgets.length}
+              previewMode={previewMode}
+            />
+          )}
+        </div>
+      ))}
       <button
         className="btn btn-primary"
         onClick={() => createWidgetForTopic(topicId)}
@@ -137,7 +149,7 @@ const propertyToDispatchMapper = (dispatch) => ({
   updateWidget: (widget) => updateWidget(dispatch, widget),
   deleteWidget: (widget) => deleteWidget(dispatch, widget),
   togglePreviewMode: (currentMode) => togglePreviewMode(dispatch, currentMode),
-  updateAllWidgets: (widgets) => updateAllWidgets(dispatch, widgets)
+  updateAllWidgets: (widgets) => updateAllWidgets(dispatch, widgets),
 });
 export default connect(
   stateToPropertyMapper,
