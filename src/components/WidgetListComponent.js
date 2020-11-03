@@ -13,6 +13,7 @@ import {
   deleteWidget,
   findWidgetsForTopic,
   togglePreviewMode,
+  updateAllWidgets,
 } from "../actions/widgetActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -25,6 +26,7 @@ const WidgetListComponent = ({
   deleteWidget,
   previewMode,
   togglePreviewMode,
+  updateAllWidgets,
 }) => {
   const handleWidgetChange = (event, widgetToChange) => {
     updateWidget({ ...widgetToChange, type: event.target.value });
@@ -75,6 +77,7 @@ const WidgetListComponent = ({
           Preview
         </label>
       </div>
+      <button onClick={() => updateAllWidgets(widgets)} className="btn btn-success">Save</button>
       <ul className="nav">
         {widgets.map((widget) => (
           <li key={widget.id}>
@@ -134,6 +137,7 @@ const propertyToDispatchMapper = (dispatch) => ({
   updateWidget: (widget) => updateWidget(dispatch, widget),
   deleteWidget: (widget) => deleteWidget(dispatch, widget),
   togglePreviewMode: (currentMode) => togglePreviewMode(dispatch, currentMode),
+  updateAllWidgets: (widgets) => updateAllWidgets(dispatch, widgets)
 });
 export default connect(
   stateToPropertyMapper,

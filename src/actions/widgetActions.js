@@ -14,12 +14,10 @@ export const deleteWidget = (dispatch, widget) =>
   );
 
 export const updateWidget = (dispatch, widget) => {
-  widgetService.updateWidget(widget.id, widget).then((status) =>
-    dispatch({
-      type: UPDATE_WIDGET,
-      widget,
-    })
-  );
+  dispatch({
+    type: UPDATE_WIDGET,
+    widget,
+  });
 };
 
 export const createWidget = (dispatch, topicId, widget) =>
@@ -41,8 +39,19 @@ export const findWidgetsForTopic = (dispatch, topicId) => {
 };
 
 export const togglePreviewMode = (dispatch, currentPreviewMode) => {
-    return dispatch({
-      type: TOGGLE_PREVIEW_MODE,
-      previewMode: !currentPreviewMode,
+  return dispatch({
+    type: TOGGLE_PREVIEW_MODE,
+    previewMode: !currentPreviewMode,
+  });
+};
+
+export const updateAllWidgets = (dispatch, widgets) => {
+  widgets.map((widget) =>
+    widgetService.updateWidget(widget.id, widget).then((actualWidget) => {
+      dispatch({
+        type: UPDATE_WIDGET,
+        widget: actualWidget,
+      });
     })
+  );
 };
