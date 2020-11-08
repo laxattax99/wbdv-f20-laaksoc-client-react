@@ -5,7 +5,8 @@ import {
   faArrowDown,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-const HeadingWidget = ({
+
+const ImageWidget = ({
   widget,
   updateWidget,
   deleteWidget,
@@ -19,30 +20,6 @@ const HeadingWidget = ({
   const deleteAndUpdateOtherWidgets = () => {
     updatedWidgetsAfterRemoval();
     deleteWidget(widget);
-  };
-
-  const updateHeadingSize = (event) => {
-    const size = parseInt(event.target.value);
-    updateWidget({ ...widget, size: size });
-  };
-
-  const getHeadingSize = (widget) => {
-    switch (widget.size) {
-      case 1:
-        return <h1>{widget.value}</h1>;
-      case 2:
-        return <h2>{widget.value}</h2>;
-      case 3:
-        return <h3>{widget.value}</h3>;
-      case 4:
-        return <h4>{widget.value}</h4>;
-      case 5:
-        return <h5>{widget.value}</h5>;
-      case 6:
-        return <h6>{widget.value}</h6>;
-      default:
-        return <h1>{widget.value}</h1>;
-    }
   };
 
   return (
@@ -75,7 +52,7 @@ const HeadingWidget = ({
                 <option value="PARAGRAPH">Paragraph</option>
                 <option value="HEADING">Heading</option>
                 <option value="LIST">List</option>
-                <option value="IMAGE">Image</option>
+                <option value="IMAGE">Image</option> 
               </select>
               <button
                 onClick={() => deleteAndUpdateOtherWidgets()}
@@ -86,45 +63,31 @@ const HeadingWidget = ({
             </span>
           )}
         </h3>
-
         {previewMode === false && (
           <div>
             <input
+              className="form-control"
+              placeholder="Image URL"
               onChange={(event) =>
-                updateWidget({ ...widget, value: event.target.value })
+                updateWidget({ ...widget, url: event.target.value })
               }
-              className="form-control"
-              placeholder="Heading Text"
-            />
-            <br />
-            <select
-              defaultValue={widget.size ? widget.size : 1}
-              onChange={(event) => updateHeadingSize(event, widget)}
-              className="form-control"
-            >
-              <option value="1">Heading 1</option>
-              <option value="2">Heading 2</option>
-              <option value="3">Heading 3</option>
-              <option value="4">Heading 4</option>
-              <option value="5">Heading 5</option>
-              <option value="6">Heading 6</option>
-            </select>
+            ></input>
             <br />
             <input
+              className="form-control"
+              placeholder="Widget Name"
               onChange={(event) =>
                 updateWidget({ ...widget, name: event.target.value })
               }
-              className="form-control"
-              placeholder="Widget Name"
-            />
+            ></input>
             <br />
           </div>
         )}
         <h4>Preview</h4>
-        {getHeadingSize(widget)}
+        <img className="card-img-top" src={widget.url}></img>
       </div>
     </div>
   );
 };
 
-export default HeadingWidget;
+export default ImageWidget;

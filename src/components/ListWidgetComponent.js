@@ -6,7 +6,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ListWidgetComponent = ({
+const ListWidget = ({
   widget,
   updateWidget,
   deleteWidget,
@@ -58,6 +58,7 @@ const ListWidgetComponent = ({
                 <option value="PARAGRAPH">Paragraph</option>
                 <option value="HEADING">Heading</option>
                 <option value="LIST">List</option>
+                <option value="IMAGE">Image</option>
               </select>
               <button
                 onClick={() => deleteAndUpdateOtherWidgets()}
@@ -117,4 +118,4 @@ const ListWidgetComponent = ({
   );
 };
 
-export default ListWidgetComponent;
+export default ListWidget;

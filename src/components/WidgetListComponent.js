@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import HeadingWidgetComponent from "./HeadingWidgetComponent";
 import ParagraphWidgetComponent from "./ParagraphWidgetComponent";
 import ListWidgetComponent from "./ListWidgetComponent";
+import ImageWidgetComponent from "./ImageWidgetComponent";
 import {
   DELETE_WIDGET,
   CREATE_WIDGET,
@@ -144,6 +145,21 @@ const WidgetListComponent = ({
           )}
           {widget.type === "LIST" && (
             <ListWidgetComponent
+              handleWidgetChange={(event) => handleWidgetChange(event, widget)}
+              widget={widget}
+              updateWidget={updateWidget}
+              deleteWidget={deleteWidget}
+              moveWidgetUp={() => moveWidgetUp(widget)}
+              moveWidgetDown={() => moveWidgetDown(widget)}
+              numberOfWidgets={widgets.length}
+              previewMode={previewMode}
+              updatedWidgetsAfterRemoval={() =>
+                updatedWidgetsAfterRemoval(widgets, widget)
+              }
+            />
+          )}
+          {widget.type === "IMAGE" && (
+            <ImageWidgetComponent
               handleWidgetChange={(event) => handleWidgetChange(event, widget)}
               widget={widget}
               updateWidget={updateWidget}
