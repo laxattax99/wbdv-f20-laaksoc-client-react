@@ -6,7 +6,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ParagraphWidget = ({
+const ListWidgetComponent = ({
   widget,
   updateWidget,
   deleteWidget,
@@ -21,6 +21,12 @@ const ParagraphWidget = ({
     updatedWidgetsAfterRemoval();
     deleteWidget(widget);
   };
+
+  const handleChangeListType = (event) => {
+    updateWidget({ ...widget, style: event.target.value });
+  };
+
+  const listItems = widget.value ? widget.value.split("\n") : [];
 
   return (
     <div className="card">
@@ -66,11 +72,20 @@ const ParagraphWidget = ({
           <div>
             <textarea
               className="form-control"
-              placeholder="Lorem Ipsum"
+              placeholder="Enter one list item per line"
               onChange={(event) =>
                 updateWidget({ ...widget, value: event.target.value })
               }
             ></textarea>
+            <br />
+            <select
+              className="form-control"
+              defaultValue="Unordered list"
+              onChange={(event) => handleChangeListType(event)}
+            >
+              <option value="ul">Unordered list</option>
+              <option value="ol">Ordered list</option>
+            </select>
             <br />
             <input
               className="form-control"
@@ -83,10 +98,23 @@ const ParagraphWidget = ({
           </div>
         )}
         <h4>Preview</h4>
-        <p>{widget.value}</p>
+        {widget.style === "ul" && (
+          <ul>
+            {listItems.map((listItem) => (
+              <li>{listItem}</li>
+            ))}
+          </ul>
+        )}
+        {widget.style === "ol" && (
+          <ol>
+            {listItems.map((listItem) => (
+              <li>{listItem}</li>
+            ))}
+          </ol>
+        )}
       </div>
     </div>
   );
 };
 
-export default ParagraphWidget;
+export default ListWidgetComponent;

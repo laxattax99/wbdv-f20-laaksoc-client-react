@@ -1,6 +1,6 @@
-const widgetsUrl = "https://wbdv-f19-laaksoc-server-java.herokuapp.com/api/widgets";
+const widgetsUrl = "http://localhost:8080/api/widgets";
 
-const topicsUrl = "https://wbdv-f19-laaksoc-server-java.herokuapp.com/api/topics";
+const topicsUrl = "http://localhost:8080/api/topics";
 
 export const createWidget = (topicId, widget) => {
   return fetch(`${topicsUrl}/${topicId}/widgets`, {
@@ -35,7 +35,7 @@ export const updateWidget = (widgetId, widget) => {
 export const deleteWidget = (widgetId) => {
   return fetch(`${widgetsUrl}/${widgetId}`, {
     method: "DELETE",
-  }).then((response) => response.json());
+  }).then();
 };
 
 export default {
