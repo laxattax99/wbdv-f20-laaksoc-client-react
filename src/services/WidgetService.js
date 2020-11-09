@@ -1,6 +1,6 @@
-const widgetsUrl = "http://localhost:8080/api/widgets";
+const widgetsUrl = "https://wbdv-f19-laaksoc-server-java.herokuapp.com/api/widgets";
 
-const topicsUrl = "http://localhost:8080/api/topics";
+const topicsUrl = "https://wbdv-f19-laaksoc-server-java.herokuapp.com/api/topics";
 
 export const createWidget = (topicId, widget) => {
   return fetch(`${topicsUrl}/${topicId}/widgets`, {
